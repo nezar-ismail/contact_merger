@@ -9,12 +9,13 @@ and merged without deleting information from the source rows.
 Running the project writes these files under `output/`:
 
 - `merged_contacts.xlsx` - contacts ready to review or import back into Google Contacts.
+- `merged_contacts.csv` - the same merged contacts in CSV format.
 - `duplicate_report.xlsx` - one row per merge decision, including confidence and conflicts.
 - `merge_log.txt` - readable text log of duplicate groups and merge decisions.
 
 When `DRY_RUN = True`, the report and log are still produced, but
-`merged_contacts.xlsx` keeps the original contacts instead of replacing duplicate
-groups with merged contacts.
+`merged_contacts.xlsx` and `merged_contacts.csv` keep the original contacts
+instead of replacing duplicate groups with merged contacts.
 
 If an output workbook is open in Excel or locked by OneDrive, Windows may block
 overwriting it. In that case the app writes a timestamped fallback file, such as
@@ -55,6 +56,7 @@ Important values:
 
 - `INPUT_FILE` - source Google Contacts workbook.
 - `OUTPUT_FILE` - merged contacts workbook path.
+- `CSV_OUTPUT_FILE` - merged contacts CSV path.
 - `REPORT_FILE` - duplicate report workbook path.
 - `LOG_FILE` - merge log path.
 - `DRY_RUN` - when `True`, generate reports without collapsing duplicate groups.

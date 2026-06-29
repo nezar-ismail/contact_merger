@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from config import DRY_RUN, LOG_FILE, OUTPUT_FILE, REPORT_FILE
+from config import CSV_OUTPUT_FILE, DRY_RUN, LOG_FILE, OUTPUT_FILE, REPORT_FILE
 from field_mergers import *
 from matcher import build_contact_groups
 from models import MergeGroup
@@ -40,12 +40,21 @@ def merge_all_groups(groups, dry_run: bool = False):
     return merged, reports
 
 
-def write_outputs(contacts, headers, output_file=OUTPUT_FILE, report_file=REPORT_FILE, log_file=LOG_FILE, dry_run: bool = DRY_RUN):
+def write_outputs(
+    contacts,
+    headers,
+    output_file=OUTPUT_FILE,
+    csv_output_file=CSV_OUTPUT_FILE,
+    report_file=REPORT_FILE,
+    log_file=LOG_FILE,
+    dry_run: bool = DRY_RUN,
+):
     groups = build_contact_groups(contacts)
     merged_contacts, reports = merge_all_groups(groups, dry_run=dry_run)
 
     written_paths = {
         "merged_contacts": write_merged_contacts(output_file, merged_contacts, headers),
+        "merged_contacts_csv": write_merged_contacts(csv_output_file, merged_contacts, headers),
         "duplicate_report": write_duplicate_report(report_file, reports),
         "merge_log": write_merge_log(log_file, reports, dry_run=dry_run),
     }
